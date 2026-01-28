@@ -1,9 +1,10 @@
 
 source("sequential_estimation.R")
-
+source("de_seq.R")
+source("pso_seq.R")
 set.seed(22)
-M <- 30
-N <- 30
+M <- 40
+N <- 40
 S <- 3
 K <- 3  
 generate_noise <- function(M, N, S, sd = 1) {
@@ -50,7 +51,7 @@ generate_synthetic <- function(M, N, S) {
 y <- generate_synthetic(M,N,S)
 
 # ---- estimate ----
-est <- estimate_seq(M,N,S,y,K)
+est <- estimate_seq_DE(M,N,S,y,K)
 
 # ---- print results ----
 cat("\nEstimated parameters:\n")
@@ -61,6 +62,23 @@ for(k in 1:K){
   cat("lambda =", est$lambda[k], "\n")
   cat("mu     =", est$mu[k], "\n")
   cat("nu     =", est$nu[k], "\n")
+}
+
+# ---- true values (for reference) ----
+cat("\nTrue parameters:\n")
+cat("Comp 1: A=10, B=10, lambda=2.0, mu=2.0, nu=2.0\n")
+cat("Comp 2: A=5,  B=5,  lambda=1.5, mu=1.5, nu=1.5\n")
+est2 <- estimate_seq_PSO(M,N,S,y,K)
+
+# ---- print results ----
+cat("\nEstimated parameters:\n")
+for(k in 1:K){
+  cat("\nComponent", k, "\n")
+  cat("A      =", est2$A[k], "\n")
+  cat("B      =", est2$B[k], "\n")
+  cat("lambda =", est2$lambda[k], "\n")
+  cat("mu     =", est2$mu[k], "\n")
+  cat("nu     =", est2$nu[k], "\n")
 }
 
 # ---- true values (for reference) ----

@@ -37,8 +37,6 @@ estimate_seq <- function(M, N, S, y_arr, K) {
 
     best_rss <- Inf
     p1 <- c(NA, NA, NA)
-
-    # -------- GRID SEARCH --------
     for(lam in lam_grid){
       for(mu in mu_grid){
         for(nu in nu_grid){
@@ -87,3 +85,4 @@ estimate_seq <- function(M, N, S, y_arr, K) {
     nu = nu_hat
   ))
 }
+

@@ -1,7 +1,7 @@
 library(png)
 source("sequential_estimation.R")
 
-img <- readPNG("pattern_cell.png")
+img <- readPNG("weave_comp.png")
 img <- img[,,1:3] 
 M <- dim(img)[1]
 N <- dim(img)[2]
@@ -45,7 +45,7 @@ for(si in 1:(S-1)){
   }
 }
 
-K <- 66
+K <- 200
 
 vals <- c(I[,,1], I[,,2])
 idx <- expand.grid(
@@ -102,7 +102,7 @@ for(k in 1:K){
 
 set.seed(1)
 est <- estimate_seq(M, N, S, y, K)
-
+est2 <- estimate_seq(M, N, S, y, K)
 y_final <- array(0, dim = c(M,N,S))
 
 for(k in 1:K){
@@ -127,7 +127,7 @@ clip01 <- function(x) {
   x[x > 1] <- 1
   x
 }
-png("figure5_textures.png", width=1200, height=400)
+png("figure5_weave.png", width=1200, height=400)
 par(mfrow=c(1,3), mar=c(1,1,2,1))
 
 plot(as.raster(clip01(y + mean(img))), main="(a) Original Texture")
